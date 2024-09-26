@@ -31,18 +31,7 @@ export class AppComponent {
 
 constructor(){
 
-  const{ name, age } = this.person
-  console.log('desestructuracion: ', name, age)
 
-
-
-  let both = [...this.students, ...this.parents]
-  console.log ('spreed operator', both)
-
-  console.log('RES operator', this.sum(2,4,6))
-
-
-  console.log('subtract', this.subtract(8,4))
 
   console.log('MAP:', this.animals.map( (animal:string) => ( animal + 'new')    ))
   console.log('FOREACH:', this.animals.forEach( (animal) => ( animal + 'new')    ))
