@@ -22,11 +22,26 @@ export class AppComponent {
   animals:string[] = ['a','b','c','d','e','f','g']
 
   person: IPerson = {
-    name: 'a',
-    lastName: 'b'
+    name: 'juan',
+    lastName: 'perez'
   }
 
+  students:number[] = [1,2,3,4,5,6]
+  parents:number[] = [7,8,9,10]
+
 constructor(){
+
+  const{ name, age } = this.person
+  console.log('desestructuracion: ', name, age)
+
+
+
+  let both = [...this.students, ...this.parents]
+  console.log ('spreed operator', both)
+
+  console.log('RES operator', this.sum(2,4,6))
+
+
   console.log('subtract', this.subtract(8,4))
 
   console.log('MAP:', this.animals.map( (animal:string) => ( animal + 'new')    ))
