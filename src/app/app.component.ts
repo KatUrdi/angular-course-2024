@@ -1,4 +1,4 @@
-import { Component } from '@angular_core.js';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 interface IPerson {
@@ -39,7 +39,7 @@ constructor(){
   let both = [...this.students, ...this.parents]
   console.log ('spreed operator', both)
 
-  console.log('RES operator', this.sum(2,4,6))
+  console.log('RES operator', this.sum(2,4))
 
 
   console.log('subtract', this.subtract(8,4))
