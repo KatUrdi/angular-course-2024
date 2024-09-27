@@ -1,4 +1,5 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 @Component({
   selector: 'user-card',
   standalone: true,
@@ -7,7 +8,15 @@ import { Component, Input, Output } from '@angular/core';
   styleUrl: './user-card.component.scss'
 })
 export class UserCardComponent {
+
   @Input() name:string = ''
   @Input() email:string = ''
-  @Output() sendData: any
+
+  @Output() sendData = new EventEmitter()
+
+  public onSendData(){
+    //console.log('onSendData in child')
+    this.sendData.emit('Hi from child component')
+  }
+
 }

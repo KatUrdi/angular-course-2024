@@ -1,0 +1,31 @@
+.calculator {
+    border: 1px solid green;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    
+    .sum {
+      background-color: yellow;
+    }
+    .mul {
+      background-color: papayawhip;
+    }
+    .reset {
+      background-color: aqua;
+    }
+  }
+  
+  .history {
+    border: 1px solid blue; /* Agregar borde para el historial */
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+    width: 300px; /* Establecer un ancho fijo */
+    height: auto; /* Para que el alto se ajuste al contenido */
+  }
