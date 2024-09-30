@@ -11,12 +11,55 @@
     >
 </user-card>
 
-<p>RESULT:  {{result}}</p>
-<calculator 
-(sum)="onResult($event)" 
-(mul)="onResult($event)" 
-(reset)="onResult($event)">
-</calculator>
+<p>RESULT: {{ result }}</p>
+<div class="container">
+  <div class="column">
+    <calculator (response)="onResult($event)"></calculator>
+  </div>
+  <div class="column">
+    <history [history]="history"></history>
+  </div>
+</div>
 
-<!-- History Component -->
-<history [operations]="operations"></history>
+<p *ngIf="var1 === var2 else elseold">Variables are equal</p>
+<ng-template #elseold><p>old, result is false</p></ng-template>
+
+@if(var1===var2){
+  <p>New sintax, variables are equal</p>
+} @else{
+  <p>New sintax, result is false</p>
+}
+
+<p *ngFor="let item of students; let i=index">Student: {{item}} at index {{i}}</p>
+
+@for(item of students; track item; let i=$index){
+  <p>New Syntax Student: {{item}} at index {{i}}</p>
+}
+
+<div [ngSwitch]="var1">
+  <p *ngSwitchCase="0">var is 0</p>
+  <p *ngSwitchCase="1">var is 1</p>
+  <p *ngSwitchCase="2">var is 2</p>
+  <p *ngSwitchDefault>default</p>
+</div>
+
+@switch(var1){
+  @case(0){<p>new syntax: value is 0</p>}
+  @case(1){<p>new syntax: value is 1</p>}
+  @case(2){<p>new syntax: value is 2</p>}
+  @default{<p>new syntax: default</p>}
+}
+
+<div class="container">
+  <div class ="column">
+    @for(person of persons; track person){
+      <person [person]="person"></person>
+    }
+  </div>
+  <div class ="column">
+    <div class="column-box">Total female gender: {{females}}</div>
+    <div class="column-box">Total male gender: {{males}}</div>
+    <div class="column-box">Total discounts: {{discounts}}</div>
+    <div class="column-box-button" (click)="deleteDiscounts()">Delete People With Discounts</div>
+  </div>
+</div>
