@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'user-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss'
 })
@@ -15,8 +16,7 @@ export class UserCardComponent {
   @Output() sendData = new EventEmitter()
 
   public onSendData(){
-    //console.log('onSendData in child')
+    console.log("Sending from child")
     this.sendData.emit('Hi from child component')
   }
-
 }
