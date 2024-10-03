@@ -1,12 +1,14 @@
-<h1>Hello, {{ title + 2 }}</h1>
-<p>Add {{ sum(3,5) }}</p>
-<!-- <p>Subtract {{ subtract(9,5) }}</p> -->
+<h1>Sum of Variable title and Variable subtitle: {{ title + subtitle }}</h1>
+<p>Sum: {{ sum(2, 4) }}</p>
+<p>Get Array, FOR: {{ getArray() }}</p>
 
-<p>Only Pares {{ getArray() }}</p>
+<button (click)="userCardCreated = !userCardCreated">Create and destroy user card</button>
+<button (click)="selectedUser=users[0]">change to user 0</button>
+<button (click)="selectedUser=users[1]">change to user 1</button>
 
 <user-card 
-    name="juan" 
-    [email]="'juan@gmail.com'"
+    [name]="selectedUser.name"
+    [email]="selectedUser.email"
     (sendData)="receiveData($event)"
     >
 </user-card>

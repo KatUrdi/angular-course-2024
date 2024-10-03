@@ -45,6 +45,10 @@ export class AppComponent {
   var2=null
   var3='hola'
 
+  userCardCreated:boolean=true
+  users=[{name:"abc", email:"algo@gmail.com"},{name:"hola", email:"otro@gmail.com"}]
+  selectedUser:any=this.users[0]
+
   constructor(){
 
     const {name, age} = this.person
