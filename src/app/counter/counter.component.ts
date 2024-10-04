@@ -11,17 +11,23 @@ export class CounterComponent {
   appBackground:string='red'
   constructor(){
     afterRender({
-      earlyRead: () => {
+      /*earlyRead: () => {
         console.log("INTO EARLY READ")
         const currentAppColor = this.appBackground
         return 'From earlyRead: '+currentAppColor
-      },
-      write: (props) => {
-        console.log("INTO WRITE ", props)
+      },*/
+      write: () => {
+        console.log("INTO WRITE")
         document.body.style.backgroundColor = this.appBackground
+        const currentAppColor = this.appBackground
+        if(currentAppColor.includes('red')){
+          this.appBackground='blue'
+        }else{
+          this.appBackground='red'
+        }
         return 'From write: '+this.appBackground
       },
-      mixedReadWrite: (props) => {
+      /*mixedReadWrite: (props) => {
         console.log("INTO MIXED READ WRITE", props)
         if(props.indexOf('red') > -1){
           this.appBackground='green'
@@ -29,7 +35,7 @@ export class CounterComponent {
           this.appBackground='red'
         }
         return 'From mixedReadWrite: '+this.appBackground
-      },
+      },*/
       read: (props) => {
         console.log("INTO READ ",props)
         const newBackground = this.appBackground
