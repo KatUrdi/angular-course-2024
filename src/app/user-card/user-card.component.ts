@@ -34,4 +34,4 @@ export class UserCardComponent implements OnInit, OnDestroy, OnChanges{
   public onSendData(){
     console.log("Sending from child")
   }
-}
+  

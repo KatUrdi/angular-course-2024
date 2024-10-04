@@ -45,7 +45,7 @@ export class AppComponent {
   var2=null
   var3='hola'
 
-  userCardCreated:boolean=true
+  userCardCreated:boolean=true //tareaaa
   users=[{name:"abc", email:"algo@gmail.com"},{name:"hola", email:"otro@gmail.com"}]
   selectedUser:any=this.users[0]
 
