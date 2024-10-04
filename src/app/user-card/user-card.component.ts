@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, Component, DoCheck, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'user-card',
@@ -8,14 +8,22 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss'
 })
-export class UserCardComponent implements OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit{
+export class UserCardComponent implements OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit, AfterViewInit{
   @Input() name:string = ''
   @Input() email:string = ''
   @Output() sendData = new EventEmitter()
+  @ViewChild('buttonTest') buttonTest!:ElementRef
   password:string=""
+  showButton:boolean= false
 
   constructor(){
     console.log("user card constructor")
+  }
+
+  ngAfterViewInit(): void {
+    console.log("user card after view init");
+    console.log("Native element", this.buttonTest)
+    this.buttonTest.nativeElement.textContent = "MODIFIED SEND DATA"
   }
 
   ngAfterContentInit(): void {
