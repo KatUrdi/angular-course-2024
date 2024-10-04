@@ -8,9 +8,32 @@ import { afterNextRender, afterRender, Component } from '@angular/core';
 })
 export class CounterComponent {
   sum:number=0
+  appBackground:string='red'
   constructor(){
-    afterRender(() =>{
-      console.log("counter after render: ",this.sum)
+    afterRender({
+      earlyRead: () => {
+        console.log("INTO EARLY READ")
+        const currentAppColor = this.appBackground
+        return 'From earlyRead: '+currentAppColor
+      },
+      write: (props) => {
+        console.log("INTO WRITE ", props)
+        document.body.style.backgroundColor = this.appBackground
+        return 'From write: '+this.appBackground
+      },
+      mixedReadWrite: (props) => {
+        console.log("INTO MIXED READ WRITE", props)
+        if(props.indexOf('red') > -1){
+          this.appBackground='green'
+        }else{
+          this.appBackground='red'
+        }
+        return 'From mixedReadWrite: '+this.appBackground
+      },
+      read: (props) => {
+        console.log("INTO READ ",props)
+        const newBackground = this.appBackground
+      } 
     })
     afterNextRender(() =>{
       console.log("counter after next render: ",this.sum)
