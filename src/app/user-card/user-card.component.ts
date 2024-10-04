@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'user-card',
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss'
 })
-export class UserCardComponent implements OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit, AfterViewInit{
+export class UserCardComponent implements OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit, AfterViewInit, AfterContentChecked, AfterViewChecked{
   @Input() name:string = ''
   @Input() email:string = ''
   @Output() sendData = new EventEmitter()
@@ -19,6 +19,12 @@ export class UserCardComponent implements OnInit, OnDestroy, OnChanges, DoCheck,
 
   constructor(){
     console.log("user card constructor")
+  }
+  ngAfterViewChecked(): void {
+    console.log("user card after view checked");
+  }
+  ngAfterContentChecked(): void {
+    console.log("user card after content checked");
   }
   ngAfterViewInit(): void { //solamente ingresa una vez!!! nunca mas
     console.log("user card after view init");
