@@ -6,12 +6,18 @@
 <button (click)="selectedUser=users[0]">change to user 0</button>
 <button (click)="selectedUser=users[1]">change to user 1</button>
 
-<user-card 
+@if(userCardCreated){
+  <user-card
     [name]="selectedUser.name"
     [email]="selectedUser.email"
     (sendData)="receiveData($event)"
-    >
-</user-card>
+  >
+  <p>HEllO from FATHER</p>
+  <button>bUTTON FROM fATHER</button>
+  </user-card>
+  } @else{
+    <p>User card destroyed</p>
+  }
 
 <p>RESULT: {{ result }}</p>
 <div class="container">
@@ -65,3 +71,4 @@
     <div class="column-box-button" (click)="deleteDiscounts()">Delete People With Discounts</div>
   </div>
 </div>
+<counter></counter>
