@@ -8,6 +8,7 @@ import { PersonComponent } from './person/person.component';
 import { CounterComponent } from './counter/counter.component';
 import { ProductModule } from './product/product.module';
 import { ClientModule } from './client/client.module';
+import { filter, from, map, tap } from 'rxjs';
 interface IPerson{
   name:string,
   lastName:string,
@@ -17,7 +18,8 @@ interface IPerson{
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UserCardComponent, CalculatorComponent, HistoryComponent, CommonModule, PersonComponent, CounterComponent, ProductModule, ClientModule],
+  imports: [RouterOutlet, UserCardComponent, CalculatorComponent, HistoryComponent, CommonModule, PersonComponent, CounterComponent],
+  templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
@@ -29,7 +31,7 @@ export class AppComponent {
   animals:string[]=["a","b","c","d","e","f","g"]
 
   person: IPerson = {
-    name:"ivan",
+    name:"carlos",
     lastName:"perez",
     age:25
   }
@@ -37,7 +39,7 @@ export class AppComponent {
   females:number=0
   males:number=0
   discounts:number=0
-  persons:any[]=[{gender:0,name:"carla ayala",age:23},{gender:1,name:"Aniceto Arce",age:12},{gender:0,name:"Luisa Armentia",age:43}]
+  persons:any[]=[{gender:0,name:"Marcela Valencia",age:23},{gender:1,name:"Aniceto Arce",age:12},{gender:0,name:"Luisa Armentia",age:43}]
 
   students:number[] = [1,2,3,4,5,6]
   parents:number[] = [7,8,9]
@@ -46,7 +48,8 @@ export class AppComponent {
   var2=null
   var3='hola'
 
-  userCardCreated:boolean=true //tareaaa
+  youtube = from([1,2,3,4,5,6,7])
+  userCardCreated:boolean=true
   users=[{name:"abc", email:"algo@gmail.com"},{name:"hola", email:"otro@gmail.com"}]
   selectedUser:any=this.users[0]
 
@@ -73,7 +76,31 @@ export class AppComponent {
 
     this.calculateTotals()
 
+    this.youtube.subscribe((res) =>
+    {
+      console.log('YOUTUBE DATA: ', res)
+    }
+    )
   }
+  addVideo(){
+    this.youtube.pipe(
+      map((res:number) =>{
+        //console.log('MAP OPERATOR RXJS: ',res)
+        if(res%2===0){
+          return res
+        } else{
+          return null
+        }
+      }),
+      tap((res:number |null) => {console.log('VALUE: ', res)}),
+      filter((res:number | null)=> res!==null)
+    ).subscribe(
+      (res) =>{
+        console.log('SUBSCRIBER 2: ', res)
+      }
+    )
+  }
+
 
   public calculateTotals() {
     this.females = this.persons.filter(p => p.gender === 0).length;
