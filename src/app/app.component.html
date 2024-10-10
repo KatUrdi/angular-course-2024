@@ -1,3 +1,52 @@
-<h1>Hello, {{ title + 2 }}</h1>
-<p>Add {{ sum(3,5) }}</p>
-<!-- <p>Subtract {{ subtract(9,5) }}</p> -->
+import { ListComponent } from './P1/list/list.component';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { data } from './P1/data';
+import { CommonModule } from '@angular/common';
+import { ItemComponent } from './P1/item/item.component';
+import { SearchComponent } from './P1/search/search.component';
+import { CardComponent } from './P1/card/card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
+})
+export class AppComponent implements OnInit{
+  
+  title = 'nuevo_proyecto_angular';
+  list:any[] = []
+  originalList: any[] = [];
+  objectCard:any = ''
+  tab:number =1
+  
+  ngOnInit(): void {
+    this.list=Object.entries(data);
+    this.originalList = this.list;
+    this.objectCard = this.list[0];
+  }
+
+  public receiveData(data:any){
+    console.log("received person")
+    if(data.operation){
+      console.log("delete")
+      this.list = this.list.filter(entry => entry[0] !== data.key);
+    } else{
+      this.objectCard = this.list.filter(entry => entry[0]===data.key)[0]
+    }
+  }
+
+  public receiveSearchTerm(data:string){
+    console.log("got search term")
+    if (data) {
+      this.list = this.list.filter(entry => {
+        const fullName = `${entry[1].name} ${entry[1].lastName}`.toLowerCase();
+        return fullName.includes(data.toLowerCase());
+      });
+    } else {
+      this.list = [...this.originalList];
+    }
+  }
+}
