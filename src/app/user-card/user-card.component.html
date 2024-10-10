@@ -1,18 +1,29 @@
-<div [ngClass]="{
-  'user-card': password === '123',
-  'user-card-black': password === 'hola'
-}">
-    <p [ngStyle]="{
-      'background-color': password === 'red' ? 'red' : 'yellow' ,
-    }">USER CARD COMPONENT</p>
-    <p [class.user-card]="password === '123'">INPUT NAME: {{ name }}</p>
-    <p [style.background-color]="password === 'red' ? 'red' : 'yellow'">INPUT email: {{ email }}</p>
-    <button #buttonShow (click) = "showButton = !showButton">Show send data</button>
-    @if(showButton){
-      <button #buttonTest (click)="onSendData()">Send Data</button>
-    }
-    <p>PASSWORD: {{password}}</p>
-  
+<div *ngIf="person">
+  <div>
+    <button (click)="changePage('personal')">Personal</button>
+    <button (click)="changePage('geographic')">Geographic</button>
+    <button (click)="changePage('messages')">Messages</button>
+  </div>
+
+  <div *ngIf="currentPage === 'personal'">
+    <p>Name: {{ person.name }}</p>
+    <p>Last Name: {{ person.lastName }}</p>
+    <p *ngIf="person.type === 'student'">Score: {{ getScore() }}</p>
+    <p *ngIf="person.type === 'professor'">Subject: {{ person.subject }}</p>
+  </div>
+
+  <div *ngIf="currentPage === 'geographic'">
+    <p>Address: {{ person.address.street }} {{ person.address.number }}</p>
+    <p>Country: {{ person.country }}</p>
+    <p>Province: {{ person.province }}</p>
+  </div>
+
+  <div *ngIf="currentPage === 'messages'">
+    <app-search (searchEvent)="onSearch($event)"></app-search>
+    <app-list [people]="person.messages"></app-list>
+  </div>
+</div>
+
 
     <ng-content></ng-content>
 

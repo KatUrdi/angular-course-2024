@@ -1,5 +1,5 @@
 .container {
-    display:flex;
+    display: flex;
     flex-direction: row;
     position: relative;
     width: 100%;
@@ -13,28 +13,31 @@
     margin: 20px;
     align-items: center;
     justify-content: center;
+    background-color: #add8e6; /* Azul claro */
+}
 
-    .column-box{
-        display:flex;
-        margin:16px;
-        padding:20px;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
+.column-box {
+    display: flex;
+    margin: 16px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #ffcc80; /* Naranja claro */
+}
 
-    .column-box-button{
-        display:flex;
-        margin:16px;
-        padding:20px;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        cursor: pointer;
-    }
+.column-box-button {
+    display: flex;
+    margin: 16px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+    background-color: #ffcc80; /* Naranja claro */
+}
 
-    .column-box-button:hover{
-        background-color: darkslategrey;
-        color: rgb(243, 243, 243);
-    }
+.column-box-button:hover {
+    background-color: darkslategrey; /* Puedes cambiar este color si deseas */
+    color: rgb(243, 243, 243);
 }

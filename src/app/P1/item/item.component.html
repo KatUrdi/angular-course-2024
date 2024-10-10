@@ -1,0 +1,50 @@
+<div [style.backgroundColor]="type === 0 ? '' : (object.type === 'student' ? '#add8e6' : '#ffcc80')">
+    <ng-container *ngIf="type === 0; else elseBlock">
+        <p>{{ object.message }}</p>
+    </ng-container>
+
+    <ng-template #elseBlock>
+        <div class="container">
+            <p>{{ object.name }} {{ object.lastName }} - {{ object.type }}</p>
+            <button (click)="showTabs()">Show</button>
+            <button (click)="sendPersonToParent(1)">Delete</button>
+        </div>
+
+        <!-- Sección de pestañas -->
+        <div *ngIf="showingTabs">
+            <ul class="tabs">
+                <li [class.active]="activeTab === 'personal'" (click)="setActiveTab('personal')">Personal</li>
+                <li [class.active]="activeTab === 'geographic'" (click)="setActiveTab('geographic')">Geographic</li>
+                <li [class.active]="activeTab === 'messages'" (click)="setActiveTab('messages')">Messages</li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Personal Tab Content, solo se muestra al hacer click en 'Personal' -->
+                <div *ngIf="activeTab === 'personal'">
+                    <p><strong>Name:</strong> {{ object.name }}</p>
+                    <p><strong>Last Name:</strong> {{ object.lastName }}</p>
+                    <p><strong>Type:</strong> {{ object.type }}</p>
+
+                    <ng-container *ngIf="object.type === 'student'; else professorTemplate">
+                        <p><strong>Score:</strong> {{ object.score }}</p> <!-- Muestra el score si es un estudiante -->
+                    </ng-container>
+                    <ng-template #professorTemplate>
+                        <p><strong>Subject:</strong> {{ object.subject }}</p> <!-- Muestra el subject si es un profesor -->
+                    </ng-template>
+                </div>
+
+                <!-- Geographic Tab Content -->
+                <div *ngIf="activeTab === 'geographic'">
+                    <p><strong>Address:</strong> {{ object.address }}</p>
+                    <p><strong>Country:</strong> {{ object.country }}</p>
+                    <p><strong>Province:</strong> {{ object.province }}</p>
+                </div>
+
+                <!-- Messages Tab Content -->
+                <div *ngIf="activeTab === 'messages'">
+                    <p>Messages: {{ object.messages.join(', ') }}</p>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
