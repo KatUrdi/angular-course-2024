@@ -23,6 +23,13 @@
   <div [ngColors]="'green'" [defaultColor]="'pink'" (colorChange)="getColor($event)" (colorChangeDouble)="getColor($event)">
     MY CUSTOM ATTRIBUTE DIRECTIVE
   </div>
+
+  <button (click)="userCardCreated= !userCardCreated">change usrCardCreted</button>
+<p>{{userCardCreated}}</p>
+<div *ngCreateHtml="userCardCreated" (sendMessage)="getColor($event)">
+<p>MY CUSTOM STRUCTURAL DIRECTIVE</p>
+</div>
+
   <!-- <p>RESULT: {{ result }}</p>
   <div class="container">
     <div class="column">

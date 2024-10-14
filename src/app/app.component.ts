@@ -7,10 +7,11 @@ import { SearchComponent } from './P1/search/search.component';
 import { CardComponent } from './P1/card/card.component';
 import { data } from './P1/data';
 import { AppColorsDirective } from './app-colors.directive';
+import { CreateHtmlDirective } from './create-html.directive';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective],
+  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective, CreateHtmlDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
