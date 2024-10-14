@@ -8,10 +8,12 @@ import { CardComponent } from './P1/card/card.component';
 import { data } from './P1/data';
 import { AppColorsDirective } from './app-colors.directive';
 import { CreateHtmlDirective } from './create-html.directive';
+import { PurePipe } from './pure.pipe';
+import { ImpurePipe } from './impure.pipe';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective, CreateHtmlDirective],
+  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective, CreateHtmlDirective, PurePipe, ImpurePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,6 +23,7 @@ export class AppComponent implements OnInit{
   list:any[] = []
   originalList: any[] = [];
   objectCard:any = ''
+  students:number[] = [1,2,3,4,5,6,7,8,9]
   
   ngOnInit(): void {
     this.list=Object.entries(data);
@@ -51,6 +54,10 @@ export class AppComponent implements OnInit{
   }
   public getColor(data:any){
     console.log(data)
+  }
+
+  public addNumber(){
+    this.students = [...this.students,10]
   }
 }
 

@@ -30,6 +30,18 @@
 <p>MY CUSTOM STRUCTURAL DIRECTIVE</p>
 </div>
 
+<p>PIPES</p>
+<p>{{ users | json}}</p>
+<p>{{ 'juan'' | uppercase}}</p>
+<p>{{ 'JUAN' | lowercase}}</p>
+<p>{{ 'hola mundo' | titlecase}}</p>
+<p>{{ 'tUE oCT 27 15:35:08 CDT 2009' | date: 'dd/MM/YYYY'}}</p>
+<p>MY FIRST PURE PIPE: {{ students | pure}}</p>
+<p>MY FIRST PURE PIPE: {{ students | impure}}</p>
+<button (click)="students.push(10)">add new number</button>
+<button (click)="addNumber()">add new number</button>
+
+
   <!-- <p>RESULT: {{ result }}</p>
   <div class="container">
     <div class="column">
