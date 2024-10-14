@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Event, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ListComponent } from './P1/list/list.component';
 import { ItemComponent } from './P1/item/item.component';
 import { SearchComponent } from './P1/search/search.component';
 import { CardComponent } from './P1/card/card.component';
 import { data } from './P1/data';
-
+import { AppColorsDirective } from './app-colors.directive';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent],
+  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -48,4 +48,8 @@ export class AppComponent implements OnInit{
       this.list = [...this.originalList];  // Reset the list if the search term is empty
     }
   }
+  public getColor(data:any){
+    console.log(data)
+  }
 }
+
