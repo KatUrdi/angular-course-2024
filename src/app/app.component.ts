@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Event, RouterOutlet } from '@angular/router';
+import { Event, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ListComponent } from './P1/list/list.component';
 import { ItemComponent } from './P1/item/item.component';
@@ -16,7 +16,7 @@ import {MatCardModule} from '@angular/material/card';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective, CreateHtmlDirective, PurePipe, ImpurePipe, MatButtonModule, MatCardModule],
+  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective, CreateHtmlDirective, PurePipe, ImpurePipe, MatButtonModule, MatCardModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
