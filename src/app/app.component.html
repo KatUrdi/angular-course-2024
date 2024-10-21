@@ -132,11 +132,14 @@
 <button type="button" class="btn btn-dark">Dark</button>
 <button type="button" class="btn btn-link">Link</button>
 <button type="button" class="btn btn-light" [routerLink]="'/card'">User Card</button>
+<button type="button" class="btn btn-light" [routerLink]="['card',8]">User Card 8</button>
+<button type="button" class="btn btn-light" [routerLink]="['card',1]">User Card 1</button>
 <button type="button" class="btn btn-dark" [routerLink]="'/calc'">Calculator</button>
 <button type="button" class="btn btn-warning" [routerLink]="'/counter'">Counter</button>
 <button type="button" class="btn btn-warning" [routerLink]="'/student'">Student</button>
 <button type="button" class="btn btn-warning" [routerLink]="'/student/classmate'">Classmate</button>
 <button type="button" class="btn btn-warning" [routerLink]="'/student/average'">Average</button>
+<button type="button" class="btn btn-warning" (click)="goToStudent()">OTHER STUDENT FROM TS</button>
 <div style="border: 4cqmax solid yellowgreen ">
 <router-outlet>
   

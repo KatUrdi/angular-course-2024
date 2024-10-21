@@ -5,8 +5,9 @@ import { CounterComponent } from './counter/counter.component';
 
 export const routes: Routes = [
     {
-        path: "card",
+        path: "card/:studentId",
         component: UserCardComponent,
+        title: "User Card"
     },
     {
         path: "calc",

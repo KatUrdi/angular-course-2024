@@ -1,67 +1,175 @@
-import { Component, OnInit } from '@angular/core';
-import { Event, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ListComponent } from './P1/list/list.component';
-import { ItemComponent } from './P1/item/item.component';
-import { SearchComponent } from './P1/search/search.component';
-import { CardComponent } from './P1/card/card.component';
-import { data } from './P1/data';
+import { Component } from '@angular/core';
+import { Event, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { UserCardComponent } from './user-card/user-card.component';
+import { CalculatorComponent } from './calculator/calculator.component';
+import { HistoryComponent } from './history/history.component';
+import { PersonComponent } from './person/person.component';
+import { CounterComponent } from './counter/counter.component';
+import { filter, from, map, tap } from 'rxjs';
 import { AppColorsDirective } from './app-colors.directive';
 import { CreateHtmlDirective } from './create-html.directive';
 import { PurePipe } from './pure.pipe';
 import { ImpurePipe } from './impure.pipe';
+
 import {ChangeDetectionStrategy} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+
+interface IPerson{
+  name:string,
+  lastName:string,
+  age?:number
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ItemComponent, SearchComponent, ListComponent, CardComponent, AppColorsDirective, CreateHtmlDirective, PurePipe, ImpurePipe, MatButtonModule, MatCardModule, RouterLink],
+  imports: [RouterOutlet, UserCardComponent, CalculatorComponent, HistoryComponent, CommonModule, PersonComponent, CounterComponent, AppColorsDirective, CreateHtmlDirective
+    ,PurePipe, ImpurePipe, MatButtonModule, MatCardModule, RouterLink
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit{
-  
-  title = 'nuevo_proyecto_angular';
-  list:any[] = []
-  originalList: any[] = [];
-  objectCard:any = ''
+export class AppComponent {
+  result:number = 0;
+  history: { action: string, result: number }[] = [];
+  title:number = 20;
+  subtitle:number=2;
+
+  animals:string[]=["a","b","c","d","e","f","g"]
+
+  person: IPerson = {
+    name:"carlos",
+    lastName:"perez",
+    age:25
+  }
+
+  females:number=0
+  males:number=0
+  discounts:number=0
+  persons:any[]=[{gender:0,name:"Marcela Valencia",age:23},{gender:1,name:"Aniceto Arce",age:12},{gender:0,name:"Luisa Armentia",age:43}]
+
   students:number[] = [1,2,3,4,5,6,7,8,9]
-  
-  ngOnInit(): void {
-    this.list=Object.entries(data);
-    this.originalList = this.list;
-    this.objectCard = this.list[0];
-  }
+  parents:number[] = [7,8,9]
 
-  public receiveData(data:any){
-    console.log("received person")
-    if(data.operation){
-      console.log("delete")
-      this.list = this.list.filter(entry => entry[0] !== data.key);
-    } else{
-      this.objectCard = this.list.filter(entry => entry[0]===data.key)[0]
-    }
-  }
+  var1=0
+  var2=null
+  var3='hola'
 
-  public receiveSearchTerm(data:string){
-    console.log("got search term")
-    if (data) {
-      this.list = this.list.filter(entry => {
-        const fullName = `${entry[1].name} ${entry[1].lastName}`.toLowerCase();  // Concatenate name and lastName
-        return fullName.includes(data.toLowerCase());  // Case-insensitive search
-      });
-    } else {
-      this.list = [...this.originalList];  // Reset the list if the search term is empty
+  youtube = from([1,2,3,4,5,6,7])
+
+  userCardCreated:boolean=true
+  users=[{name:"abc", email:"algo@gmail.com"},{name:"hola", email:"otro@gmail.com"}]
+  selectedUser:any=this.users[0]
+
+  constructor(private router: Router){
+
+    const {name, age} = this.person
+    console.log("DESESTRUCTURACION: ", name,age)
+
+    let both = [...this.students, ...this.parents]
+    console.log('SPRED OPERATOR: ',both)
+
+    console.log('REST OPERATOR: ', this.sum(2,4,6,5))
+
+    console.log('Nullish Coalesing: ', this.var2 ?? this.var3)
+
+    console.log('OR: ', this.var2 || this.var1) //se va a saltar al segundo si el primero es 0,null,undefned
+
+    /*console.log("subtract: ", this.subtract(8,4))
+    console.log("MAP:", this.animals.map((animal) => (animal +'new')))
+    console.log("FOR EACH:", this.animals.forEach((animal) => (animal +'new')))
+    console.log("FIND:", this.animals.forEach((animal) => animal === 'z'))
+    console.log("FILTER:", this.animals.filter((animal) => animal === 'c'))
+    console.log("INDEXOF:", this.animals.indexOf('z'))*/
+
+    this.calculateTotals()
+
+    this.youtube.subscribe((res) =>
+    {
+      console.log('YOUTUBE DATA: ', res)
     }
-  }
-  public getColor(data:any){
-    console.log(data)
+    )
+
   }
 
   public addNumber(){
     this.students = [...this.students,10]
   }
-}
 
+  addVideo(){
+    this.youtube.pipe(
+      map((res:number) =>{
+        //console.log('MAP OPERATOR RXJS: ',res)
+        if(res%2===0){
+          return res
+        } else{
+          return null
+        }
+      }),
+      tap((res:number |null) => {console.log('VALUE: ', res)}),
+      filter((res:number | null)=> res!==null)
+    ).subscribe(
+      (res) =>{
+        console.log('SUBSCRIBER 2: ', res)
+      }
+    )
+  }
+
+  public calculateTotals() {
+    this.females = this.persons.filter(p => p.gender === 0).length;
+    this.males = this.persons.filter(p => p.gender === 1).length;
+    this.discounts = this.persons.filter(p => p.age > 18).length;
+  }
+
+  public deleteDiscounts() {
+    this.persons = this.persons.filter(p => p.age <= 18);
+    this.calculateTotals();
+  }
+
+  public receiveData(data:any){
+    console.log('Print in father component: ', data)
+  }
+
+  public onResult(event:any){
+    this.result = event.result ?? 0;
+
+    if (event !== undefined) {
+      this.history.push({ action: event.action, result: event.result });
+    }
+  }
+
+  public sum(...persons:number[]){
+    //return persons[0]+persons[1]
+    return persons.reduce((accumulator, currentValue) => (accumulator+currentValue))
+  }
+
+  public sum2(num1:number, num2:number): number{
+    return num1+num2;
+  }
+
+  private subtract(num1:number, num2:number): number{
+    return num1-num2;
+  }
+
+  public getArray(){
+    const persons:number[] = [1,2,3,4,5,6]
+    for(let i =0; i < persons.length; i++){
+      if(persons[i]%2 == 0){
+        //console.log("person = ", persons[i])
+      }
+    }
+  }
+
+  public getColor(data:any){
+    console.log(data)
+  }
+
+  public goToStudent(){
+    this.router.navigate(['student'])
+  }
+
+
+}
