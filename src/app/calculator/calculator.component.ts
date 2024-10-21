@@ -1,41 +1,55 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { HistoryComponent } from '../history/history.component';
 
 @Component({
   selector: 'calculator',
   standalone: true,
-  imports: [FormsModule, CommonModule, HistoryComponent],
+  imports: [FormsModule],
   templateUrl: './calculator.component.html',
-  styleUrls: ['./calculator.component.scss']
+  //templateUrl: './calculator.component.html',
+  template: `
+  <div class="calculator">
+  <p>Calculator</p>
+  <input type="text" [(ngModel)]="box1Value" />
+  <input type="text" [(ngModel)]="box2Value" />
+  <div class="button-container">
+    <button class="sum" (click)="onAction(1)">Sum</button>
+    <button class="mul" (click)="onAction(2)">Mul</button>
+    <button class="reset" (click)="onAction(3)">Reset</button>
+  </div>
+  <p>box1Value: {{ box1Value }}</p>
+  <p>box2Value: {{ box2Value }}</p>
+</div>`,
+  styleUrl: './calculator.component.scss'
 })
 export class CalculatorComponent {
-  box1Value: number = 0;
-  box2Value: number = 0;
-  operations: string[] = []; // Mantener historial de operaciones
+  box1Value:number=0
+  box2Value:number=0
 
-  @Output() sum = new EventEmitter();
-  @Output() mul = new EventEmitter();
-  @Output() reset = new EventEmitter();
+  @Output() response = new EventEmitter()
 
-  public onSum() {
-    const result = Number(this.box1Value) + Number(this.box2Value);
-    this.operations.push(`Sum: ${this.box1Value} + ${this.box2Value} = ${result}`);
-    this.sum.emit(result);
+  public onAction(action:number){
+    switch(action){
+      case 1:
+        this.onSum()
+        break;
+      case 2:
+        this.onMul()
+        break;
+      default:
+        this.onReset()
+    }
   }
 
-  public onMul() {
-    const result = Number(this.box1Value) * Number(this.box2Value);
-    this.operations.push(`Mul: ${this.box1Value} * ${this.box2Value} = ${result}`);
-    this.mul.emit(result);
+  public onSum(){
+    this.response.emit({ result: Number(this.box1Value) + Number(this.box2Value), action: 'Sum' })
   }
+  public onMul(){
+    this.response.emit({ result: this.box1Value * this.box2Value, action: 'Mul' })
 
-  public onReset() {
-    this.box1Value = 0; // Resetear solo los valores de entrada
-    this.box2Value = 0; // Resetear solo los valores de entrada
-    // No borrar el historial de operaciones
-    this.reset.emit(null);
   }
-}
-
+  public onReset(){
+    this.box1Value=0
+    this.box2Value=0
+    this.response.emit()
+  }
