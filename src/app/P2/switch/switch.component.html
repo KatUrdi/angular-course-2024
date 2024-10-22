@@ -1,0 +1,14 @@
+<div class="flex flex-wrap flex-row"> 
+    <button class="p-3 border-t border-l border-black border-b-white border-b-2 outline-2" (click)="tab=1">User</button> 
+    <button class="p-3 border-t border-l border-r border-black outline-2" (click)="tab=2">Notifications</button> 
+    </div> 
+    <div class="border-black border-2 p-5"> 
+        @switch(tab){ 
+            @case(1){ 
+                <user [user]="user"></user> 
+            } 
+            @case(2){ 
+                <notifications></notifications> 
+            } 
+        } 
+    </div>

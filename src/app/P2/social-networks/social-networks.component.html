@@ -1,0 +1,13 @@
+<div class="cards-container">
+    <div *ngFor="let platform of platforms" 
+         [ngStyle]="{'background-color': getPlatformColor(platform.platform)}" 
+         class="platform-card">
+      <div *ngIf="platform.platformType === 'premium'" class="premium-star">
+        ★
+      </div>
+  
+      <p>{{ platform.platform | titlecase }}</p>
+      
+      <button (click)="addNewVideo(platform.platform)">Add a new video</button>
+    </div>
+  </div>

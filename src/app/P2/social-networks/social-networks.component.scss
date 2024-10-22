@@ -1,0 +1,29 @@
+/* Asegura que las cards estén en fila */
+.cards-container {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center; 
+    padding: 20px;
+    margin: 0 auto; 
+    flex-wrap: wrap; 
+  }
+  
+  /* Estilo de cada card */
+  .platform-card {
+    position: relative;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
+  }
+  
+  .premium-star {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: gold;
+    font-size: 20px;
+  }

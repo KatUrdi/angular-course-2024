@@ -1,0 +1,28 @@
+<div *ngIf="user.active">
+    <h3>{{ user.name }}</h3>
+    <p>Age: {{ user.age }}</p>
+    <p>Status: {{ user.status }}</p>
+    <p>Subscription type: {{ user.subscriptionType }}</p>
+    <p>Amount available: {{ user.amountAvailable }}$</p>
+  
+    <div>
+      <h4>Social Networks</h4>
+      <div *ngFor="let network of socialNetworks">
+        <div>{{ network.name }}
+          <button (click)="subscribe(network.name, network.premium)">+</button>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <h4>Subscriptions</h4>
+      <div *ngFor="let sub of subscriptions">
+        <div>{{ sub }}
+          <button (click)="unsubscribe(sub)">x</button>
+        </div>
+      </div>
+    </div>
+  
+    <button (click)="closeAccount()">Close Account</button>
+  </div>
+  
