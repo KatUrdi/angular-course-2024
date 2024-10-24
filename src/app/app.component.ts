@@ -1,175 +1,170 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Event, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { UserCardComponent } from './user-card/user-card.component';
-import { CalculatorComponent } from './calculator/calculator.component';
-import { HistoryComponent } from './history/history.component';
-import { PersonComponent } from './person/person.component';
-import { CounterComponent } from './counter/counter.component';
-import { filter, from, map, tap } from 'rxjs';
-import { AppColorsDirective } from './app-colors.directive';
-import { CreateHtmlDirective } from './create-html.directive';
-import { PurePipe } from './pure.pipe';
-import { ImpurePipe } from './impure.pipe';
-
-import {ChangeDetectionStrategy} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
+import { Component } from "@angular/core";
+import { RouterOutlet, RouterLink, Router } from "@angular/router";
+import { UserCardComponent } from "./user-card/user-card.component";
+import { CalculatorComponent } from "./calculator/calculator.component";
+import { CommonModule } from "@angular/common";
+import { CounterComponent } from "./counter/counter.component";
+import { filter, from, map, tap } from "rxjs";
+import { AppColorsDirective } from "./app-colors.directive";
+import { CreateHtmlDirective } from "./create-html.directive";
+import { PurePipe } from "./pure.pipe";
+import { ImpurePipe } from "./impure.pipe";
 import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from "@angular/material/button";
 
-interface IPerson{
-  name:string,
-  lastName:string,
-  age?:number
+interface IPerson {
+  name: string;
+  lastName: string;
+  age?: number;
 }
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet, UserCardComponent, CalculatorComponent, HistoryComponent, CommonModule, PersonComponent, CounterComponent, AppColorsDirective, CreateHtmlDirective
-    ,PurePipe, ImpurePipe, MatButtonModule, MatCardModule, RouterLink
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    UserCardComponent,
+    CalculatorComponent,
+    CommonModule,
+    CounterComponent,
+    AppColorsDirective,
+    CreateHtmlDirective,
+    PurePipe,
+    ImpurePipe,
+    MatCardModule,
+    MatButtonModule
   ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.scss",
 })
 export class AppComponent {
-  result:number = 0;
-  history: { action: string, result: number }[] = [];
-  title:number = 20;
-  subtitle:number=2;
+  users = [
+    { name: "abc", email: "abc@gmail.com" },
+    { name: "dfg", email: "dfg@gmail.com" },
+  ];
+  selectedUser: any = this.users[0];
 
-  animals:string[]=["a","b","c","d","e","f","g"]
+  userCardCreated: boolean = false;
+
+  result: number = 0;
+  title: number = 10;
+  animals: string[] = ["a", "b", "c", "d", "e", "f", "g"];
 
   person: IPerson = {
-    name:"carlos",
-    lastName:"perez",
-    age:25
+    name: "Juan",
+    lastName: "Perez",
+    age: 25,
+  };
+  students: number[] = [1, 2, 3, 4, 5, 6,7,8,9];
+  parents: number[] = [7, 8, 9, 10];
+
+  var1 = 0;
+  var2 = null;
+  var3 = "hola";
+
+  youtube = from([1, 2, 3, 4, 5, 6]);
+
+  constructor(private router: Router) {
+    const { name, age } = this.person;
+    let both = [...this.students, ...this.parents];
+
+    this.youtube.subscribe((res) => {
+      console.log("SUSCRIBER 1: ", res);
+    });
   }
 
-  females:number=0
-  males:number=0
-  discounts:number=0
-  persons:any[]=[{gender:0,name:"Marcela Valencia",age:23},{gender:1,name:"Aniceto Arce",age:12},{gender:0,name:"Luisa Armentia",age:43}]
-
-  students:number[] = [1,2,3,4,5,6,7,8,9]
-  parents:number[] = [7,8,9]
-
-  var1=0
-  var2=null
-  var3='hola'
-
-  youtube = from([1,2,3,4,5,6,7])
-
-  userCardCreated:boolean=true
-  users=[{name:"abc", email:"algo@gmail.com"},{name:"hola", email:"otro@gmail.com"}]
-  selectedUser:any=this.users[0]
-
-  constructor(private router: Router){
-
-    const {name, age} = this.person
-    console.log("DESESTRUCTURACION: ", name,age)
-
-    let both = [...this.students, ...this.parents]
-    console.log('SPRED OPERATOR: ',both)
-
-    console.log('REST OPERATOR: ', this.sum(2,4,6,5))
-
-    console.log('Nullish Coalesing: ', this.var2 ?? this.var3)
-
-    console.log('OR: ', this.var2 || this.var1) //se va a saltar al segundo si el primero es 0,null,undefned
-
-    /*console.log("subtract: ", this.subtract(8,4))
-    console.log("MAP:", this.animals.map((animal) => (animal +'new')))
-    console.log("FOR EACH:", this.animals.forEach((animal) => (animal +'new')))
-    console.log("FIND:", this.animals.forEach((animal) => animal === 'z'))
-    console.log("FILTER:", this.animals.filter((animal) => animal === 'c'))
-    console.log("INDEXOF:", this.animals.indexOf('z'))*/
-
-    this.calculateTotals()
-
-    this.youtube.subscribe((res) =>
-    {
-      console.log('YOUTUBE DATA: ', res)
-    }
-    )
-
+  public sumPure(a:number, b:number): number {
+    return a + b;
   }
 
-  public addNumber(){
-    this.students = [...this.students,10]
+  public sumImpure(a:number, b:number): number {
+    return a + b + Math.random();
   }
 
-  addVideo(){
-    this.youtube.pipe(
-      map((res:number) =>{
-        //console.log('MAP OPERATOR RXJS: ',res)
-        if(res%2===0){
-          return res
-        } else{
-          return null
-        }
-      }),
-      tap((res:number |null) => {console.log('VALUE: ', res)}),
-      filter((res:number | null)=> res!==null)
-    ).subscribe(
-      (res) =>{
-        console.log('SUBSCRIBER 2: ', res)
-      }
-    )
+  public sum(...persons: number[]) {
+    //return persons[0] + persons[1]
+    return persons.reduce(
+      (acumulador, valorActual) => acumulador + valorActual,
+      10
+    );
   }
 
-  public calculateTotals() {
-    this.females = this.persons.filter(p => p.gender === 0).length;
-    this.males = this.persons.filter(p => p.gender === 1).length;
-    this.discounts = this.persons.filter(p => p.age > 18).length;
+  addVideo() {
+    this.youtube
+      .pipe(
+        map((res: number) => {
+          //console.log("MAP OPERATOER RXJS: ", res);
+          if (res % 2 === 0) {
+            return res;
+          } else {
+            return null
+          }
+        }),
+        tap((res)  => {console.log('VALUE: ', res)}),
+        filter((res: number | null) => res !== null),
+      )
+      .subscribe((res) => {
+        console.log("SUSCRIBER 2: ", res);
+      });
   }
 
-  public deleteDiscounts() {
-    this.persons = this.persons.filter(p => p.age <= 18);
-    this.calculateTotals();
+  public sum2(num1: number, num2: number): number {
+    return num1 + num2;
   }
 
-  public receiveData(data:any){
-    console.log('Print in father component: ', data)
+  private subtract(num1: number, num2: number): number {
+    return num1 - num2;
   }
 
-  public onResult(event:any){
-    this.result = event.result ?? 0;
-
-    if (event !== undefined) {
-      this.history.push({ action: event.action, result: event.result });
+  public getArray(): void {
+    const persons: number[] = [1, 2, 3, 4, 5];
+    for (let i = 0; i < persons.length; i++) {
+      //console.log('person =', persons[i])
     }
   }
 
-  public sum(...persons:number[]){
-    //return persons[0]+persons[1]
-    return persons.reduce((accumulator, currentValue) => (accumulator+currentValue))
+  public getColor(value:any): void {
+    console.log("value: ", value);
   }
 
-  public sum2(num1:number, num2:number): number{
-    return num1+num2;
+  //  function sumar(){
+  //   return 1 + 2;
+  //  }
+
+  //  const suma = () => {
+  //   return 1 + 2
+  //  }
+
+  //  function resta(){
+  //   return 'hola' + a
+  //  }
+
+  // arrow functions
+  //  const resta = () => ('hola' + a)
+
+  public receiveData(data: any) {
+    console.log("Print in father component: ", data);
   }
 
-  private subtract(num1:number, num2:number): number{
-    return num1-num2;
+  public onResult(event: any) {
+    console.log("event from child:", event);
+    this.result = event ?? 0;
   }
 
-  public getArray(){
-    const persons:number[] = [1,2,3,4,5,6]
-    for(let i =0; i < persons.length; i++){
-      if(persons[i]%2 == 0){
-        //console.log("person = ", persons[i])
-      }
-    }
+  public addNumber() {
+    this.students = [...this.students, 12]
   }
 
-  public getColor(data:any){
-    console.log(data)
-  }
-
-  public goToStudent(){
+  public goToStudentModule() {
     this.router.navigate(['student'])
   }
 
+  public goToCard() {
+    this.router.navigate(['card', 1])
+  }
 
+  public onCalculator(){
+    this.router.navigate(['cal'], {queryParams: {name: 'John', age: 20}})
+  }
 }
