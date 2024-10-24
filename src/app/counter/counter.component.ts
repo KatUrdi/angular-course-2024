@@ -1,4 +1,5 @@
-import { afterNextRender, afterRender, Component } from '@angular/core';
+import { Component, afterRender, afterNextRender } from '@angular/core';
+
 @Component({
   selector: 'counter',
   standalone: true,
@@ -7,42 +8,35 @@ import { afterNextRender, afterRender, Component } from '@angular/core';
   styleUrl: './counter.component.scss'
 })
 export class CounterComponent {
-  sum:number=0
-  appBackground:string='red'
-  constructor(){
+
+  sum: number = 0
+  appBackground: string = 'red'
+
+  constructor() {
     afterRender({
-      /*earlyRead: () => {
-        console.log("INTO EARLY READ")
-        const currentAppColor = this.appBackground
-        return 'From earlyRead: '+currentAppColor
-      },*/
-      write: () => {
-        console.log("INTO WRITE")
+      write:() => {
+        console.log('INTO write')
         document.body.style.backgroundColor = this.appBackground
-        const currentAppColor = this.appBackground
-        if(currentAppColor.includes('red')){
-          this.appBackground='blue'
-        }else{
-          this.appBackground='red'
+
+        const currentColor = this.appBackground
+        if(currentColor === 'red') {
+          this.appBackground = 'blue'
+        } else {
+          this.appBackground = 'red'
         }
-        return 'From write: '+this.appBackground
+
+        return 'FROM write: ' + this.appBackground
       },
-      /*mixedReadWrite: (props) => {
-        console.log("INTO MIXED READ WRITE", props)
-        if(props.indexOf('red') > -1){
-          this.appBackground='green'
-        }else{
-          this.appBackground='red'
-        }
-        return 'From mixedReadWrite: '+this.appBackground
-      },*/
-      read: (props) => {
-        console.log("INTO READ ",props)
+      read:(props) => {
+        console.log('INTO read ', props)
         const newBackground = this.appBackground
-      } 
-    })
-    afterNextRender(() =>{
-      console.log("counter after next render: ",this.sum)
+        console.log('FROM read: ', newBackground)
+      },
+  })
+
+    afterNextRender(() => {
+      console.log('AFTER NEXT RENDER: ', this.sum)
     })
   }
+
 }

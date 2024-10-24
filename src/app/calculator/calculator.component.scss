@@ -1,34 +1,23 @@
 .calculator {
-  border: 1px solid green;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  align-items: center;
-  justify-content: center;
+    border: 1px green solid;
+    padding: 20px;
 
-  .input-container{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-  }
+    .buttons-container {
+       display: flex;
+       flex-direction: row;
+       
+       .sum {
+        background-color: yellow;
+       }
+       .mul{
+        background-color: papayawhip;
+       }
+       .reset{
+        background-color: aqua;
+       }
+        
+    }
 
-  .button-container {
-      display: flex;
-      flex-direction: row;
-      margin: 20px;
-      justify-content: space-between;
 
-      .sum {
-          flex:1;
-          background-color: yellow;
-      }
-      .mul {
-          flex:1;
-          background-color: papayawhip;
-      }
-      .reset {
-          flex:1;
-          background-color: aqua;
-      }
-  }
+
 }

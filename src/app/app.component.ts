@@ -12,6 +12,7 @@ import { ImpurePipe } from "./impure.pipe";
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from "@angular/material/button";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+
 interface IPerson {
   name: string;
   lastName: string;
@@ -24,7 +25,6 @@ interface IForm {
   proffesor: string
   university: string
 }
-
 @Component({
   selector: "app-root",
   standalone: true,
@@ -47,10 +47,15 @@ interface IForm {
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
 })
+
 export class AppComponent {
+
   scoreControl = new FormControl<string>('asdasdasd', [Validators.required])
+
   name:string = 'testName'
   lastName:string = ''
+
+
   users = [
     { name: "abc", email: "abc@gmail.com" },
     { name: "dfg", email: "dfg@gmail.com" },
@@ -78,7 +83,7 @@ export class AppComponent {
   youtube = from([1, 2, 3, 4, 5, 6]);
 
   studentForm!: FormGroup
-  student2Form!: UntypedFormGroup 
+  student2Form!: UntypedFormGroup
 
   constructor(
     private router: Router, 
@@ -91,9 +96,11 @@ export class AppComponent {
       console.log("SUSCRIBER 1: ", res);
     });
 
+
     this.scoreControl.valueChanges.subscribe((res) => {
       console.log('SCORE VALUE OBSERVABLE: ', res)
     })
+
     this.studentForm = this.formBuilder.group({
       name: ['', Validators.required],
       score: [''],
@@ -109,6 +116,7 @@ export class AppComponent {
       proffesor: [''],
       university: ['']
     })
+
     /* this.studentForm = new FormGroup({
       name: new FormControl<string>('sdasdasdasd', [Validators.required]),
       score: new FormControl<string>('sdfsdfsdf'),
@@ -121,9 +129,11 @@ export class AppComponent {
       console.log('FORM GROUP OBSERVABLE: ', res)
     })
   }
+
   print(){
     console.log('FORM NAME: ', this.studentForm.get('name'))
   }
+
   onSendData() {
     console.log('FORM GROUP: ', this.studentForm)
   }
@@ -221,11 +231,13 @@ export class AppComponent {
   public onCalculator(){
     this.router.navigate(['cal'], {queryParams: {name: 'John', age: 20}})
   }
+  
   onSubmit(data:any){
     console.log('TEMPLATE DRIVEN FORM: ', data)
   }
+
   onPrintScore(){
     console.log('SCORE: ', this.scoreControl.value)
   }
+
 }
-//prueba

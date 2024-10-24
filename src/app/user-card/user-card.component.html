@@ -1,34 +1,30 @@
-<div *ngIf="person">
-  <div>
-    <button (click)="changePage('personal')">Personal</button>
-    <button (click)="changePage('geographic')">Geographic</button>
-    <button (click)="changePage('messages')">Messages</button>
-  </div>
+<div [ngClass]="{
+  'user-card': password === '123',
+  'user-card-black': password === 'hola' 
+}">
+  <p [ngStyle]="{
+      'background-color': password === 'red' ? 'red' : 'yellow' ,
+  }">USER CARD COMPONENT</p>
 
-  <div *ngIf="currentPage === 'personal'">
-    <p>Name: {{ person.name }}</p>
-    <p>Last Name: {{ person.lastName }}</p>
-    <p *ngIf="person.type === 'student'">Score: {{ getScore() }}</p>
-    <p *ngIf="person.type === 'professor'">Subject: {{ person.subject }}</p>
-  </div>
+  <p [class.user-card]="password === '123'">INPUT NAME: {{ name }}</p>
+  <p [style.background-color]="password === 'red' ? 'red' : 'yellow'">INPUT email: {{ email }}</p>
 
-  <div *ngIf="currentPage === 'geographic'">
-    <p>Address: {{ person.address.street }} {{ person.address.number }}</p>
-    <p>Country: {{ person.country }}</p>
-    <p>Province: {{ person.province }}</p>
-  </div>
+  <input type="text" [(ngModel)]="password">
 
-  <div *ngIf="currentPage === 'messages'">
-    <app-search (searchEvent)="onSearch($event)"></app-search>
-    <app-list [people]="person.messages"></app-list>
-  </div>
+  <button #buttonShow (click)="showButton = !showButton">show button</button>
+  
+  @if(showButton){
+      <button #buttonTest (click)="onSendData()">send Data</button>
+  }
+
+  <p>PASSWORD = {{password}}</p>
+
+  <ng-content></ng-content>
+
+
+
+  <app-navbar></app-navbar>
+  <app-card></app-card>
+  <app-alert></app-alert>
+
 </div>
-
-
-    <ng-content></ng-content>
-
-    <app-navbar></app-navbar>
-    <app-card></app-card>
-    <app-alert></app-alert>
-    
-  </div>

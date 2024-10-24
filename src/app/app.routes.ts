@@ -1,25 +1,26 @@
 import { Routes } from '@angular/router';
 import { UserCardComponent } from './user-card/user-card.component';
 import { CalculatorComponent } from './calculator/calculator.component';
-import { CounterComponent } from './counter/counter.component';
 
 export const routes: Routes = [
     {
-        path: "card/:studentId",
+        path: 'card/:studentId',
         component: UserCardComponent,
-        title: "User Card"
+        title: 'user card test tilte'
     },
     {
-        path: "calc",
+        path: 'cal',
         component: CalculatorComponent
     },
     {
-        path: "counter",
-        loadComponent: () => import('./counter/counter.component').then(c => c.CounterComponent)
-    }
-    ,
+        path: 'counter-nav',
+        loadComponent: () => import('./counter/counter.component').then(c => {
+            // we can put more logic here
+            return c.CounterComponent
+        })
+    },
     {
-        path: "student",
-        loadChildren: () => import('./student/student.module').then(c => c.StudentModule)
+        path: 'student',
+        loadChildren: () => import('./student/student.module').then(m => m.StudentModule)
     }
 ];

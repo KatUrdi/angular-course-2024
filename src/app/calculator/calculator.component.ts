@@ -30,12 +30,15 @@ export class CalculatorComponent implements OnInit {
   @Output() reset = new EventEmitter()
 
   constructor(private _activatedRoute: ActivatedRoute) { }
+
   ngOnInit(): void {
       this._activatedRoute.queryParams.subscribe(params => {
         console.log('query params: ', params)
       })
+
       console.log('query params snapshot: ', this._activatedRoute.snapshot.queryParams)
   }
+
   public onSum(){
     this.sum.emit(Number(this.box1Value) + Number(this.box2Value))
   }

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+  selector: 'app-alert',
+  templateUrl: './alert.component.html',
+  styleUrl: './alert.component.scss'
 })
-export class CardComponent {
+export class AlertComponent {
+
 }
