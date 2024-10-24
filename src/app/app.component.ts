@@ -228,3 +228,4 @@ export class AppComponent {
     console.log('SCORE: ', this.scoreControl.value)
   }
 }
+//prueba
