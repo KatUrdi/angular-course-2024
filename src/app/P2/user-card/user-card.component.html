@@ -1,0 +1,39 @@
+<div class="flex flex-wrap flex-row">
+    <button 
+      class="p-3 border-t border-l border-black border-b-white border-b-2 outline-2" 
+      (click)="tab = 1"
+    >
+      User
+    </button>
+    <button 
+      class="p-3 border-t border-l border-r border-black outline-2" 
+      (click)="tab = 2"
+    >
+      Notifications
+    </button>
+  </div>
+  
+  <div class="border-black border-2 p-5">
+    <ng-container [ngSwitch]="tab">
+      <ng-container *ngSwitchCase="1">
+        <user-data 
+          [user]="user" 
+          [newMedia]="newMedia" 
+          [availableSocialNetworks]="availableSocialNetworks" 
+          [subscribedSocialNetworks]="subscribedSocialNetworks"
+          (sendData)="handleNotification($event)"
+          (addSocialMedia)="addSocialMedia($event)"
+          (removeSocialMedia)="removeSocialMedia($event)"
+        >
+        </user-data>
+      </ng-container>
+      <ng-container *ngSwitchCase="2">
+        <notifications 
+          #notificationsComp 
+          [notifications]="notifications"
+        >
+        </notifications>
+      </ng-container>
+    </ng-container>
+  </div>
+  

@@ -1,0 +1,16 @@
+<div class="flex flex-row">
+    <div
+      *ngFor="let platform of platforms"
+      [ngStyle]="{ 'background-color': getPlatformColor(platform.platform) }"
+      class="flex flex-col items-center justify-center m-3 p-3 rounded-md"
+    >
+      <ng-container *ngIf="platform.platformType === 'premium'">★</ng-container>
+  
+      <p>{{ platform.platform | titlecase }}</p>
+  
+      <button class="bg-gray-200 rounded-md" (click)="addNewMedia(platform.platform)">
+        Add a new {{ platform.type }}
+      </button>
+    </div>
+  </div>
+  
