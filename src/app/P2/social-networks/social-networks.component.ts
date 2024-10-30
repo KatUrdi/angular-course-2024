@@ -1,31 +1,55 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { socialNetworks } from '../data P2';
+import { Component } from '@angular/core';
+import { data, socialNetworks } from '../data P2';
 
 @Component({
   selector: 'app-social-networks',
-  standalone: true,  
-  imports: [CommonModule],  
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './social-networks.component.html',
-  styleUrls: ['./social-networks.component.scss']
+  styleUrl: './social-networks.component.scss'
 })
 export class SocialNetworksComponent {
-  platforms = socialNetworks;  
+  socialNetworks = socialNetworks;
+  users = data;
 
-  platformColors: { [key: string]: string } = {
-    youtube: '#FF0000',
-    facebook: '#4267B2',
-    tiktok: '#000000',
-    instagram: '#C13584',
-    whatsapp: '#25D366'
-  };
-
-  getPlatformColor(platform: string): string {
-    return this.platformColors[platform.toLowerCase()] || '#FFFFFF'; 
+  getButtonText(platform: string): string {
+    switch (platform) {
+      case 'youtube':
+      case 'tiktok':
+        return 'Add new video';
+      case 'instagram':
+      case 'facebook':
+        return 'Add new story';
+      case 'whatsapp':
+        return 'Add new message';
+      default:
+        return '';
+    }
   }
 
-  addNewVideo(platform: string) {
-    console.log("Adding a new video to ${platform}");
-    
+  sendNotification(network: any) {
+    const platformId = network.id;
+
+    for (let userId in this.users) {
+      const user = this.users[userId];
+
+      if (user.subscriptions.includes(platformId)) {
+        if (network.platform == 'tiktok' || network.platform == 'whatsapp') {
+          if (user.subscriptionType == 'premium') {
+            if (user.amountAvailable >= 5) {
+              user.amountAvailable -= 5;
+              user.notifications.push(`${network.platform} sent a new ${network.type}`);
+            } else {
+              console.log(`${user.name} does not have enough balance to receive a notification from ${network.platform}`);
+            }
+          } else {
+            console.log(`${user.name} cannot receive notifications from ${network.platform}`);
+          }
+        } else {
+          user.notifications.push(`${network.platform} added a new ${network.type}`);
+        }
+      }
+    }
   }
 }

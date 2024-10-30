@@ -1,7 +1,5 @@
-<div>
-    <h4>Notifications ({{ notifications.length }})</h4>
-    <div *ngFor="let notif of notifications">
-      <p>{{ notif.message }}</p>
-    </div>
-  </div>
-  
+<div *ngFor="let notification of notification" 
+     [ngStyle]="{'background-color': getColor(notification)}"
+     class="notification-box">
+  {{ notification | titlecase }}
+</div>

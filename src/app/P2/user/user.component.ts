@@ -1,52 +1,54 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { NotificationComponent } from '../notification/notification.component';
+import { socialNetworks } from '../data P2';
 
 @Component({
   selector: 'app-user',
+  standalone: true,
+  imports: [CommonModule, NotificationComponent],
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrl: './user.component.scss'
 })
-export class UserComponent implements OnChanges {
-  @Input() user: any;  
+export class UserComponent {
+  @Input() user: any;
+  showNotification = false;
+  isClosed = false; 
 
- 
-  socialNetworks = [
-    { name: 'facebook', premium: false },
-    { name: 'tiktok', premium: true },
-    { name: 'youtube', premium: false },
-    { name: 'instagram', premium: false },
-    { name: 'whatsapp', premium: true }
-  ];
-
-  
-  subscriptions: string[] = [];
-
-  
-  notifications$ = new BehaviorSubject<any[]>([]);
-
-  ngOnChanges() {
-    
-    if (this.user) {
-      this.subscriptions = this.user.subscriptions;
-      this.notifications$.next(this.user.notifications);
-    }
+  toggleView() {
+    this.showNotification = !this.showNotification;
   }
 
-  subscribe(network: string, isPremium: boolean) {
-    if (isPremium && this.user.subscriptionType !== 'Premium') {
-      alert('Solo los usuarios premium pueden suscribirse a TikTok o WhatsApp.');
-      return;
-    }
-    if (!this.subscriptions.includes(network)) {
-      this.subscriptions.push(network);
-    }
+  networkColor: { [key: string]: string } = {
+    youtube: 'red',
+    tiktok: 'purple',
+    instagram: 'yellow',
+    facebook: 'skyblue',
+    whatsapp: 'green'
+  };
+
+  changeSubscriptionType(newType: string) {
+    this.user.subscriptionType = newType;
   }
 
-  unsubscribe(network: string) {
-    this.subscriptions = this.subscriptions.filter(sub => sub !== network);
+  getUnsubscribedSocialNetworks() {
+    return socialNetworks.filter(sn => !this.user.subscriptions.includes(sn.id));
+  }
+
+  getPlatformById(id: number): string {
+    const network = socialNetworks.find(network => network.id === id);
+    return network ? network.platform : '';
+  }
+
+  addSubscription(id: number) {
+    this.user.subscriptions.push(id);
+  }
+
+  removeSubscription(id: number) {
+    this.user.subscriptions = this.user.subscriptions.filter((subId: number) => subId !== id);
   }
 
   closeAccount() {
-    this.user.active = false;
+    this.isClosed = true; 
   }
 }

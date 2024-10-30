@@ -1,13 +1,16 @@
-<div class="cards-container">
-    <div *ngFor="let platform of platforms" 
-         [ngStyle]="{'background-color': getPlatformColor(platform.platform)}" 
-         class="platform-card">
-      <div *ngIf="platform.platformType === 'premium'" class="premium-star">
-        ★
-      </div>
-  
-      <p>{{ platform.platform | titlecase }}</p>
-      
-      <button (click)="addNewVideo(platform.platform)">Add a new video</button>
+<div class="social-networks">
+  <div 
+    *ngFor="let network of socialNetworks" 
+    class="card" 
+    [ngClass]="network.platform">
+    
+    <button (click)="sendNotification(network)">
+      {{ getButtonText(network.platform) | titlecase }}
+    </button>
+    
+    <div class="network-content">
+      {{ network.platform | titlecase }}
+      <span *ngIf="network.platformType === 'premium'">★</span>
     </div>
   </div>
+</div>

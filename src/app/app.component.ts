@@ -1,24 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { RouterOutlet } from '@angular/router';
+import { SocialNetworksComponent } from './P2/social-networks/social-networks.component';
+import { UserComponent } from './P2/user/user.component';
 import { data } from './P2/data P2';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, SocialNetworksComponent, UserComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  // Definición de los usuarios como objeto
-  users = data;
-
-  // Notificaciones de los usuarios, usando BehaviorSubject
-  notifications$: { [key: string]: BehaviorSubject<any[]> } = {};
-
-  constructor() {
-    // Crear un BehaviorSubject para cada usuario
-    Object.keys(this.users).forEach(user_id => {
-      // Inicializar el BehaviorSubject con un tipo explícito
-      this.notifications$[user_id] = new BehaviorSubject<any[]>([]);
-    });
-  }
+  users = Object.values(data);
 }
