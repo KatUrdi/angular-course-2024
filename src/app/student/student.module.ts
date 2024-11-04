@@ -9,11 +9,17 @@ import { ExamService } from './exam.service';
 
 
 @NgModule({
-  declarations: [ScoreComponent, ClassmateComponent, AverageComponent],
-  providers: [ExamService],
+  declarations: [
+    ScoreComponent
+  ],
   imports: [
     CommonModule,
-    StudentRoutingModule
+    StudentRoutingModule,
+    ClassmateComponent,
+    AverageComponent
+  ],
+  providers: [
+    ExamService
   ]
 })
 export class StudentModule { }
