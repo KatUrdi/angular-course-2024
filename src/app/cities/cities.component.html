@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+
+  <!-- Add City Section -->
+  <div class="add-city">
+    <input type="number" [(ngModel)]="newCityId" placeholder="Enter City ID" />
+    <input type="text" [(ngModel)]="newCityName" placeholder="Enter City Name" />
+    <button (click)="addCity()">Add City</button>
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-city">
+    <input type="text" [(ngModel)]="filterText" placeholder="Search city by name" />
+    <button (click)="filterCities()">Search</button>
+    <button (click)="resetSearch()">Reset</button>
+    <p *ngIf="searchResult" class="search-result">{{ searchResult }}</p>
+  </div>
+
+  <!-- List of Cities -->
+  <ul class="city-list">
+    <li *ngFor="let city of cities" (click)="deleteCity(city.id)">
+      {{ city.name }} (ID: {{ city.id }})
+    </li>
+  </ul>
+</div>
